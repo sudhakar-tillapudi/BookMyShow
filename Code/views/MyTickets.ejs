@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Movie Booking System - Your Tickets</title>
+    <% include Head %>
+</head>
+
+<body>
+    <header>
+        <% include GuestHeader %>
+    </header>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var url = window.location.href;
+            if (url.indexOf('?EmailId=') != -1)
+            {
+                $('#txtEmailId').val('<%= EmailId %>');
+                $('#divErrorMessage').show();
+            }
+            else
+                $('#divErrorMessage').hide();
+        });
+    </script>
+    <div align="center">
+        <form class="navbar-form" role="search" action="MyTickets" method="GET">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Email Id" id="txtEmailId" name="EmailId" style="width:250px;">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </form>
+    </div>
+
+    <%
+    if(MyTickets != null)
+    {
+        if(MyTickets.length == 0)
+        {%>
+        <br/>
+        <div align="center">
+        <div class="panel panel-primary" style="width:350px;" align="center" id="divErrorMessage">
+            <div class="panel-heading" style="width:350px">
+                <div align="center" class="panel-title">There are no booked shows to display!</div>
+
+            </div>
+        </div>
+</div>
+        
+        <%}
+    for(var i=0;i<MyTickets.length;i++)
+    {%>
+    <div align="center">
+            <div class="container">
+                <div class="col-md-9">
+                    <div class="panel panel-info" style="border-color:white;">
+                        <div class="panel-heading" style="background-color: white;border-color: lightgray">
+                            <div class="panel-title" align="center">
+                                Show is on :
+                                    <%= MyTickets[i].ShowDate %>
+                                <% if(MyTickets[i].IsCancelled === 'Yes'){
+                                    %>&nbsp;&nbsp;&nbsp;<p style="font-size:17px; color: red;display: inline; align:right">Cancelled</p>
+                                <%}%>
+                            </div>
+                        </div>
+                        <table align="center" style="width:100%;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+
+                            <th rowspan="13">
+                                <div class="thumbnail">
+                                    <img  src="./images/<%= MyTickets[i].ImagePath %>.jpg" /></div>
+                                </tr>
+
+                                <tr>
+                                    <td>Movie Name : </td>
+                                    <td>
+                                        <%= MyTickets[i].MovieName %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Language : </td>
+                                    <td>
+                                        <%= MyTickets[i].Language %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Theatre : </td>
+                                    <td>
+                                        <%= MyTickets[i].TheatreName %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Address : </td>
+                                    <td>
+                                        <%= MyTickets[i].TheatreAddress %>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Show Time : </td>
+                                    <td>
+                                        <%= MyTickets[i].ShowTime%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>TotalTickets : </td>
+                                    <td>
+                                        <%= MyTickets[i].TotalTickets %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>TotalFare : </td>
+                                    <td>
+                                        <%= MyTickets[i].TotalFare %>/- Rs
+                                    </td>
+                                </tr>
+                                <tr>
+
+                                    <td>Show Date : </td>
+                                    <td>
+                                        <%= MyTickets[i].BookingDate %>
+                                    </td>
+                                </tr>
+                                <tr><td></td><td></td></tr>
+                                <tr><td></td><td></td></tr>
+                                <tr><td></td><td></td></tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+</div>
+            <%}
+    }
+    %>
+    
+</body>
+
+</html>

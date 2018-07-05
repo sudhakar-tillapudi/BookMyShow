@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>Movie Booking System - Home</title>
+	<%include ../head%>
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$.ajax({
+					type: 'GET',
+					url: '/GetLoggedInUserInfo',
+					success: function (result) {
+						$('#firstname').html(result.FirstName);
+						$('#lastname').html(result.LastName);
+						$('#emailid').html(result.UserName);
+						$('#mobileno').html(result.MobileNo);
+						$('#userid').html(result.UserId);
+					}
+				});
+			});
+		</script>
+</head>
+
+<body>
+
+	<% include UserHeader%>
+
+		<div class="container">
+			<div class="col-md-9">
+				<div class="panel panel-info" style="
+    margin-top: 50px;
+    margin-left: 200px;
+	height: 200px;
+	width:450px;
+">
+					<div class="panel-heading">
+						<div class="panel-title">Account Details</div>
+					</div>
+					<div class="panel-body" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif  ;font-size: 16px;font-weight: normal">
+
+						<div class='form-group'><label for='firstname' class='col-md-3 control-label' style="font-weight : normal">User ID </label>
+							<div class='col-md-9'><label for='firstname' class='col-md-3 control-label' id="userid"></label></div>
+						</div>
+
+						<div class='form-group'><label for='firstname' class='col-md-3 control-label'>Email ID</label>
+							<div class='col-md-9'><label for='firstname' class='col-md-3 control-label' id="emailid"></label></div>
+						</div>
+
+						<div class='form-group'><label for='firstname' class='col-md-3 control-label'>First Name</label>
+							<div class='col-md-9'><label for='firstname' class='col-md-3 control-label' id="firstname"></label></div>
+						</div>
+
+						<div class='form-group'><label for='firstname' class='col-md-3 control-label'>Last Name</label>
+							<div class='col-md-9'><label for='firstname' class='col-md-3 control-label' id="lastname"></label></div>
+						</div>
+
+						<div class='form-group'><label for='mobileno' class='col-md-3 control-label'>Mobile No</label>
+							<div class='col-md-9'><label for='mobileno' class='col-md-3 control-label' id="mobileno"></label></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+		<!-- /container -->
+
+</body>
+
+</html>

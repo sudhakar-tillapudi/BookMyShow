@@ -1,0 +1,19 @@
+Description :
+BookMyShow let users create movie tickets online.
+
+Technologies used :
+1.HTML5
+2.Javascript
+3.JQuery
+4.AJAX
+5.EJS (Embedded Javascript)
+6.Node.JS
+7.EXPRESS
+8.MY-SQL
+
+How to run :
+1.Create a Database called 'MovieSheep' and Execute all the queries from DBQueries file.
+2.Goto Project folder and run following command :)
+node app
+3.open browser and type following url
+localhost:3000

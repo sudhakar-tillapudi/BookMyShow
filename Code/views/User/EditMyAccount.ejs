@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Movie Booking System - Home</title>
+		<%include ../head%>
+		
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link href="css/styles.css" rel="stylesheet">
+		<!-- script references -->
+			<script src="js/jquery.min.js"></script>
+			<script src="js/bootstrap.min.js"></script>
+		 <script language="javascript" type="text/javascript">
+     
+		 $(document).ready(function () {
+			 $("#editMyAccountForm").submit(function(event) {
+			 			 event.preventDefault();
+
+			 			 //ajax here
+			 			 });
+			 $.ajax({
+						type: 'GET',
+						url: '/GetLoggedInUserInfo',
+						success: function(result) {							
+							//alert(loggedInUserID);
+							$('#txtFirstName').val(result.FirstName);
+							$('#txtLastName').val(result.LastName);
+							$('#txtUserName').val(result.UserName);
+							$('#txtMobileNo').val(result.MobileNo);
+							//$('#userid').html(result.UserID);
+						}
+		 });
+
+		 $('#btnUpdate').click(function()
+		 {
+
+			 var userData = {
+				 Id :  <%= LoggedinUserId%>,
+				 UserName : $('#txtUserName').val(),
+				 FirstName : $('#txtFirstName').val(),
+				 LastName : $('#txtLastName').val(),
+				 MobileNo : $('#txtMobileNo').val(),
+			 };
+
+			 	$.ajax({
+					type:'POST',
+					url:'/ValidateMyAccountEdit',
+					data: userData,
+					dataType:'json',
+					success:function(result)
+					{
+						if(result.status == 1)
+						{
+							alert('Your Profile updated successfully!');
+							window.location.href='Edit';
+						}
+						else if(result.status == -1) {
+							alert('Your Profile update Failed!');
+						}
+					}
+				})
+		 });
+	 });
+
+	/*function for checking empty form feilds*/
+	function EmptyCheck()
+	{
+	var firstName=document.getElementById('txtFirstName').value;
+    var lastName=document.getElementById('txtLastName').value;
+
+	if(firstName.length==0)
+	{
+	document.getElementById('errorMessage').innerHTML='*Please Enter FirstName';
+	return false;
+	}
+	else if(lastName.length==0)
+	{
+	document.getElementById('errorMessage').innerHTML='*Please Enter LastName';
+	return false;
+	}
+	else
+	{
+	document.getElementById('errorMessage').innerHTML='';
+	return true;
+	}
+
+	}
+
+  </script>
+  
+	</head>
+
+	
+	<body>
+<% include UserHeader%>
+
+<div class="container">
+<div class="col-md-9">
+
+
+<div class="panel panel-info" style="
+    margin-top: 50px;
+    margin-left: 200px;
+	height: 230px;
+	width:450px;
+">
+    <div class="panel-heading">
+        <div class="panel-title">Change Account</div>
+    </div>
+ <div class="panel-body" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif  ;font-size: 16px;font-weight: normal">
+
+
+	<form id="editMyAccountForm">
+	<table width="423">
+
+
+		 <tr>
+		 <td width="146" style="color:#000000;background-color:#FFFFFF">UserName</td>
+		 <td width="265"  style="color:#000000;background-color:#FFFFFF">
+
+		<input  type="text" name="txtUserName" id="txtUserName"  readonly="true" style="width:250px;background-color:#CCCCCC"/>
+			</td></tr>
+		 <tr>
+		 <td width="146" style="color:#000000;background-color:#FFFFFF">FirstName</td>
+		 <td width="265"  style="color:#000000;background-color:#FFFFFF">
+
+
+		<input  type="text" id="txtFirstName"  name="txtFirstName"  style="width:250px"/>		</td></tr>
+
+		 <tr>
+		 <td width="146" style="color:#000000;background-color:#FFFFFF">LastName</td>
+		 <td width="265"  style="color:#000000;background-color:#FFFFFF"><input  type="text" id="txtLastName"  name="txtLastName"  style="width:250px;"/>				</td></tr>
+		 <tr>
+		 <td width="146" style="color:#000000;background-color:#FFFFFF">Mobile No </td>
+		 <td width="265"  style="color:#000000;background-color:#FFFFFF"><input  type="text" id="txtMobileNo"  name="txtMobileNo"  style="width:250px;"/>				</td></tr>
+
+	<tr><td height="48" style="color:#0000FF;background-color:#FFFFFF">
+
+			</td>
+		<td style="color:#0000FF;background-color:#FFFFFF" ><input type="submit" name="btnUpdate" id="btnUpdate" class="btn-success" value="UPDATE" style="float:right;margin-right:20px" onClick="return EmptyCheck()"/></td>
+            </tr>
+			<!--<tr>
+			  <td height="20" style="color:#0000FF;background-color:#FFFFFF"></td>
+			  <td style="color:#0000FF;background-color:#FFFFFF"><p id="errorMessage" style="color:#FF0000;font-family:Verdana, Arial, Helvetica, sans-serif;font-size:12px;float:right;margin-right:10px"></p></td>
+		     </tr>-->
+			</table>	</form></div>
+
+</div>
+</div>
+
+
+    </div>
+
+</div> <!-- /container -->
+
+	</body>
+</html>

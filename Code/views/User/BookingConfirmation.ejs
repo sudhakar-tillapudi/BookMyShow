@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Movie Booking System - Booking Confirmation</title>
+    <% include ../Head %>
+</head>
+
+<body>
+    <header>
+        <% include UserHeader %>
+    </header>
+
+    <div class="container">
+        <div class="col-md-9">
+            <div class="panel panel-info" style="border-color:white;">
+                <div class="panel-heading">
+                    <div class="panel-title" align="center">Your Ticket Booked Successfully!</div>
+                </div>
+                <table align="center" style="width:100%;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+
+                    <th rowspan="9">
+                        <div class="thumbnail">
+                            <img alt="" src="./images/<%= ImagePath %>.jpg"/></div>
+                        </tr>
+
+                        <tr>
+                            <td>Movie Name : </td>
+                            <td>
+                                <%= MovieName %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Language : </td>
+                            <td>
+                                <%= Language %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Theatre : </td>
+                            <td>
+                                <%= TheatreName %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Address : </td>
+                            <td>
+                                <%= TheatreAddress %>
+                            </td>
+                        </tr>
+                        <tr>
+                             
+                            <td>Show Date : </td>
+                            <td>
+                                <%= ShowDate %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Show Time : </td>
+                            <td>
+                                <%= ShowTime%>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>TotalTickets : </td>
+                            <td>
+                                <%= TotalTickets %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>TotalFare : </td>
+                            <td>
+                                <%= TotalFare %>/- Rs
+                            </td>
+                        </tr>
+                        
+                        
+
+                        
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    
+</body>
+
+</html>

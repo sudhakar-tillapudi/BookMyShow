@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Movie Booking System - Shows</title>
+    <% include ../Head %>
+</head>
+
+
+
+    <header>
+        <% include UserHeader %>
+    </header>
+<body>
+    <div class="container">
+        <div class="col-md-12">
+
+
+            <div class="row">
+
+                <% 
+if(Movies.length === 0)
+{
+    
+    %>
+                    <div id="signupbox" style=" margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div class="panel panel-primary" style="width:350px;" align="center">
+                            <div class="panel-heading" style="width:350px">
+                                <div class="panel-title">There are no movies to display!</div>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <%}
+else
+{
+                                for(var i=0;i<Movies.length;i++) { %>
+                            <form id="frmShowMovieDetails" action="MovieDetails" method="GET">
+                                <input type="hidden" name="id" value="<%= Movies[i].runningmovie_id %>" />
+                                <input type="hidden" name="ShowBookingDetails" value="1" />
+                                <div class="col-sm-4 col-lg-4 col-md-4">
+                                    <div class="thumbnail" style="margin-bottom:20px;">
+                                        <a href="UserMovieDetails?id=<%= Movies[i].runningmovie_id %>"><img alt="" src="./images/<%=Movies[i].image_path%>.jpg"/></a>
+                                        <div class="caption">
+                                            <p align="center" style="font-size: 17px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+                                                <%= Movies[i].movie_name %>
+                                            </p>
+                                            <p style="font-size: 12px" align="center">
+                                                <%= Movies[i].theatre_name %>
+                                            </p>
+                                            <p style="font-size: 12px" align="center">
+                                                <%= Movies[i].Language %> /
+                                                    <%= Movies[i].Certificate %>
+                                            </p>
+                                            <div align="center"><button type="submit" class="btn btn-danger" style="border-radius: 0px;width: 200px;"> Book Now</button></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <%
+}
+}
+%>
+                    </div>
+            </div>
+
+        </div>
+        <!-- /container -->
+
+</body>
+
+</html>

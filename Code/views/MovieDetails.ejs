@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Movie Booking System - Movie Details</title>
+    <% include Head %>
+        <script language="javascript" type="text/javascript">
+            $(document).ready(function () {
+                var today = new Date();
+                var dd = today.getDate();
+                var dayFuture = today.getDate()+6;
+                var mm = today.getMonth() + 1; //January is 0!
+                var yyyy = today.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+                if (mm < 10) {
+                    mm = '0' + mm
+                }
+
+
+                if (dayFuture < 10) {
+                    dd = '0' + dd
+                }
+                today = yyyy + '-' + mm + '-' + dd;
+                var dayafterTommrow = yyyy + '-' + mm + '-' + dayFuture;
+                document.getElementById('dtBookingDate').setAttribute('min', today);
+                document.getElementById('dtBookingDate').setAttribute('max', dayafterTommrow);
+                //console.log(today.toString());
+
+            });
+            function GetAvaialbleSeats(){
+                //get the available seats info from server using ajax call
+                var selDate = $('#dtBookingDate').val();
+                var year = selDate.substring(0,4);
+                var month = selDate.substring(5,7);
+                var day = selDate.substring(8,10);
+                var MovieDetails={
+                    movieId : $('input[name = movieId]').val(),
+                    BookingDate : month+'-'+day+'-'+year
+                }
+                $.ajax({
+                    type : 'GET',
+                    url : '/GetGuestAvailableSeats',
+                    data : MovieDetails,
+                    dataType : 'json',
+                    success : function(result){
+                        //console.log(result.SeatsAvailable);
+                        $('#txtAvailableTickets').text(result.SeatsAvailable);
+                    }
+                });
+            }
+
+            function UpdateTotalFare() {
+                var totalTickets = parseInt($('#txtTicketsCount').val());
+                var totalfare = parseFloat($('#txtFare').text()) * totalTickets;
+
+                $('#txtTotalFare').val(totalfare+'/- Rs');
+            }
+            function checkDate() {
+                var dtElement = document.getElementById("dtBookingDate");
+                var dt = dtElement.value;
+                var dateParts = dt.split("-");
+                var today = new Date();
+                var selectedDate = new Date(parseInt(dateParts[2]),
+                    parseInt(dateParts[0]) - 1,
+                    parseInt(dateParts[1]));
+                if (selectedDate < today) {
+                    //dtElement.setCustomValidity('You can not select old date to Book a ticket!');
+                    //document.getElementById('txtAvailableTickets').innerHTML = 'N/A';
+                    document.getElementById('errorMessage').innerHTML = '*You can not select old date to Book a ticket!';
+                    return false;
+                }
+                else
+                    return true;
+                // else if (selectedDate >= today) {
+                //     dtElement.setCustomValidity('');
+                //     return true;
+
+                // }
+                // else {
+                //     dtElement.setCustomValidity('');
+                //     document.getElementById('txtAvailableTickets').innerHTML = 'N/A';
+                // }
+                // return true;
+            }
+            function CheckBookingDetails() {
+
+                var selShowVal = document.getElementById('selShow').value;
+                var bookingDate = document.getElementById('dtBookingDate').value;
+                var availableTickets = parseInt(document.getElementById('txtAvailableTickets').innerHTML);
+                var totalTicketsCount = parseInt(document.getElementById('txtTicketsCount').value);
+                var emailId = document.getElementById('txtEmailId').value;
+                if(emailId === '')
+                {
+                    document.getElementById('errorMessage').innerHTML = '*Enter Your EmailId';
+                    return false;
+                }
+                else if (selShowVal == '---Select Show Time---') {
+                    document.getElementById('errorMessage').innerHTML = '*Select Show Time';
+                    return false;
+                }
+                else if (bookingDate.length == 0) {
+                    document.getElementById('errorMessage').innerHTML = '*Select Booking Date';
+                    return false;
+                }
+                else if (!checkDate()) {
+                    //document.getElementById('errorMessage').innerHTML = '* Select Total Tickets lessthan or equal to 10';
+                    return false;
+                }
+
+                else if (totalTicketsCount > 10) {
+                    document.getElementById('errorMessage').innerHTML = '*Select Total Tickets lessthan or equal to 10';
+                    return false;
+                }
+
+                else if (document.getElementById('txtTicketsCount').value.length == 0) {
+                    document.getElementById('errorMessage').innerHTML = '*Enter Total Tickets ';
+                    return false;
+                }
+                else if (totalTicketsCount > availableTickets) {
+                    document.getElementById('errorMessage').innerHTML = '*Select Total Tickets lessthan or equal to Available Tickets : ' + availableTickets;
+                    return false;
+                }
+                else if (totalTicketsCount <= 0) {
+                    document.getElementById('errorMessage').innerHTML = '*Enter Positive Number Tickets ';
+                    return false;
+                }
+                else {
+                    document.getElementById('errorMessage').innerHTML = '';
+                    return true;
+                }
+
+            }
+            $(document).ready(function () {
+                <% if(ShowBookingDetails === '1') {%>
+                    $('#bookingDetailsPanel').show();
+                    $('#btnBookNow').hide();
+                <%}
+                else {%>
+                    $('#bookingDetailsPanel').hide();
+                    $('#btnBookNow').show();
+                <%}%>
+                
+                    $('#btnBookNow').click(function () {
+                        $('#btnBookNow').hide();
+                        $('#bookingDetailsPanel').show();
+
+                    });
+            });
+        </script>
+</head>
+
+<body>
+    <header>
+        <% include GuestHeader %>
+    </header>
+
+    <div class="container">
+        <div class="col-md-9">
+            <div class="panel panel-info" style="border-color:white;">
+                <div class="panel-heading">
+                    <div class="panel-title" align="center">Movie Details</div>
+                </div>
+                <table align="center" style="width:100%;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+
+                    <th rowspan="20">
+                        <div class="thumbnail">
+                            <a href="MovieDetails?id=501"><img alt="" src="./images/<%= MovieDetails[0].image_path %>.jpg"/></a></div>
+                        </tr>
+
+                        <tr>
+                            <td>Movie Name : </td>
+                            <td>
+                                <%= MovieDetails[0].movie_name %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Cast & Crew : </td>
+                            <td>
+                                <%= MovieDetails[0].cast_and_crew %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Description : </td>
+                            <td>
+                                <%= MovieDetails[0].description %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Language : </td>
+                            <td>
+                                <%= MovieDetails[0].Language %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Certificate : </td>
+                            <td>
+                                <%= MovieDetails[0].Certificate %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Rating : </td>
+                            <td>
+                                <%= MovieDetails[0].Rating %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Theatre : </td>
+                            <td>
+                                <%= MovieDetails[0].theatre_name %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Address : </td>
+                            <td>
+                                <%= MovieDetails[0].address %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ZipCode : </td>
+                            <td>
+                                <%= MovieDetails[0].zipcode %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ticket Fare : </td>
+                            <td>
+                                <%= MovieDetails[0].price %>/- Rs
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div align="center"><button type="button" class="btn btn-danger" style="border-radius: 0px;" id="btnBookNow"> Book Now</button></div>
+                            </td>
+                        </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="bookingDetailsPanel" align="center">
+        <div class="col-md-10">
+           
+                
+
+                <div class="panel-body">
+
+                    <form action="BookMyTicket" method="post">
+                        <input type="hidden" id="theatreId" name="theatreId" value="<%= MovieDetails[0].theatre_id%>" />
+                        <input type="hidden" name="movieId" value="<%= MovieDetails[0].movie_id%>" />
+
+                        <input type="hidden" name="movieName" value="<%= MovieDetails[0].movie_name%>" />
+                        <input type="hidden" name="theatreName" value="<%= MovieDetails[0].theatre_name%>" />
+                        <input type="hidden" name="language" value="<%= MovieDetails[0].Language%>" />
+                        <input type="hidden" name="address" value="<%= MovieDetails[0].address%>" />
+                        <input type="hidden" name="imagePath" value="<%= MovieDetails[0].image_path%>" />
+
+                        <table  style=" font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+
+                            <tr>
+                                <td height="30">Email-ID </td>
+                                <td height="30" style="color:#000000;background-color:#FFFFFF"> <input style="width: 200px" type="text" id="txtEmailId" name="txtEmailId" /> </td>
+                            </tr>
+
+                            <tr>
+                                <td width="100" height="30">Show Date </td>
+                                <td width="100" height="30" style="color:#000000;background-color:#FFFFFF"> <input id="dtBookingDate" name="dtBookingDate" type="date" onchange="GetAvaialbleSeats()" required> </td>
+                            </tr>
+
+
+                            <tr>
+                                <td width="100" height="30">Show Time </td>
+                                <td width="100" height="30" style="color:#000000;background-color:#FFFFFF"> <select name="selShow" id="selShow" style="width:130px;font-size:14px">
+  <option value="6:30 - 9:00 PM">6:30 - 9:00 PM</option>"
+</select> </td>
+                            </tr>
+
+                            <tr>
+                                <td width="100" height="30">Available Seats </td>
+                                <td width="100" height="30" style="color:#000000;background-color:#FFFFFF"> <p	name="txtAvailableTickets" id="txtAvailableTickets" width="50px" style="padding-top:0px;"/>NA</p></td>
+                            </tr>
+
+                                         <tr>
+                                <td width="100" height="30">Fare </td>
+                                <td width="100" height="30" style="color:#000000;background-color:#FFFFFF">
+                                    <p name="txtFare" id="txtFare" width="50px">
+                                        <%= MovieDetails[0].price %>/- Rs
+                                    </p>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td width="100" height="30">Total Tickets </td>
+                                <td width="100" height="30" style="color:#000000;background-color:#FFFFFF"> <input type="number" min="1" max="10" step="1" value="1" name="txtTicketsCount" id="txtTicketsCount"
+                                        width="50px" style="width: 70px" onchange="UpdateTotalFare()" /> </td>
+                            </tr>
+               
+                            <tr>
+                                <td width="100" height="30">Total Fare </td>
+                                <td width="100" height="30" style="color:#000000;background-color:#FFFFFF">
+                                    <input type="text" readonly="readonly" name="txtTotalFare" id="txtTotalFare" width="80px" value="<%= MovieDetails[0].price %>/- Rs"
+                                        style="background-color:gainsboro" />
+
+                                </td>
+                            </tr>
+
+
+
+
+                            <tr>
+                                <td height="48" width="140px" class="alert-info" style="color:#0000FF;background-color:#FFFFFF">
+<p id="errorMessage" style="color:#FF0000;float: right;padding-top:10px"></p>
+                                </td>
+                                <td style="color:#0000FF;background-color:#FFFFFF">
+                                    <div align="center"><button type="submit" class="btn btn-danger" style="border-radius: 0px;" id="btnBookNow"
+                                            onClick="return CheckBookingDetails()">Make Payment</button></div>
+                                </td>
+                            </tr>
+
+                            
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    </div>
+</body>
+
+</html>

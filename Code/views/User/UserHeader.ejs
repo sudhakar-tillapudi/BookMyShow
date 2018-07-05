@@ -1,0 +1,26 @@
+
+
+<div class="navbar navbar-inverse">
+    <div class="container">
+        <a class="navbar-brand" href="#">BookMyShow</a>
+        <ul class="nav navbar-nav">
+            <li <%if(PageName==='ViewMyAccount')
+                {%>class="active"<%}%>><a href="Account">My Account</a></li>
+            <li <%if(PageName==='EditMyAccount')
+                {%>class="active"<%}%>><a href="Edit">Edit</a></li>
+            <li <%if(PageName==='ShowMyBookings')
+                {%>class="active"<%}%>><a href="MyTickets">Booking History</a></li>
+                <li <%if(PageName==='BookATicket')
+                {%>class="active"<%}%>><a href="BookATicket">Book A Ticket</a></li>
+                <li <%if(PageName==='CancelTicket')
+                {%>class="active"<%}%>><a href="CancelTicket">Cancel Ticket</a></li>
+            <li <%if(PageName==='ChangePassword')
+                {%>class="active"<%}%>><a href="ChangePassword">Change Password</a></li>
+                <li <%if(PageName==='Logout')
+                {%>class="active"<%}%>><a href="/../Logout" id="logout">Logout</a></li>
+        </ul>
+        
+       
+       
+    </div> 
+    </div>

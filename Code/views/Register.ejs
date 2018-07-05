@@ -1,134 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-	<script type="text/javascript">
-	function checkRegistrationForm()
-	{
-	var password = document.getElementById("passwd");
-    var confirm_password = document.getElementById("cpasswd");
+
+<head>
+    <script type="text/javascript">
+        function checkRegistrationForm() {
+            var password = document.getElementById("passwd");
+            var confirm_password = document.getElementById("cpasswd");
 
 
-  if(password.value != confirm_password.value) {
-    confirm_password.setCustomValidity("Passwords Don't Match");
-  } else {
-    confirm_password.setCustomValidity('');
-  }
-}
-	</script>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<meta charset="utf-8">
-		<title>Movie Booking System - Home</title>
-		<meta name="generator" content="Bootply" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link href="css/bootstrap.min.css" rel="stylesheet">
-		<!--[if lt IE 9]>
-			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
-		<link href="css/styles.css" rel="stylesheet">
-	</head>
-	<body>
+            if (password.value != confirm_password.value) {
+                confirm_password.setCustomValidity("Passwords Don't Match");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+    </script>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Movie Booking System - Your Tickets</title>
+    <% include Head %>
+</head>
 
-<div class="navbar navbar-inverse">
-  <div class="container">
-    <a class="navbar-brand" href="#">MovieSheep</a>
-    <ul class="nav navbar-nav">
-			<li><a href="index">Home</a></li>
-      <li><a href="Search">Search</a></li>
-      <li  class="active"><a href="login">Login</a></li>
-    </ul>
-  </div>
-    <div class="user">
-     <a class="user_links" href="#">Weclome, Guest</a>
-   </div>
-</div>
+<body>
+    <header>
+        <% include GuestHeader %>
+    </header>
 
-<div class="container">
-<div class="col-md-12">
-<div align="center"><h4>
-</h4>
-</div>
-<div id="signupbox" style=" margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <div class="panel-title">Sign Up</div>
 
-                </div>
-                <div class="panel-body" >
-                    <form id="signupform" class="form-horizontal" role="form" action="ValidateUserRegistration">
+    <div id="signupbox" style=" margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-primary" style="
+    width: 502px;">
+            <div class="panel-heading">
+                <div class="panel-title">Sign Up</div>
 
-                        <div id="signupalert" style="display:none" class="alert alert-danger">
-                            <p>Error:</p>
-                            <span></span>
+            </div>
+            <div class="panel-body">
+                <form id="signupform" class="form-horizontal" role="form" action="ValidateUserRegistration">
+
+                    <div id="signupalert" style="display:none" class="alert alert-danger">
+                        <p>Error:</p>
+                        <span></span>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="email" class="col-md-3 control-label">Email</label>
+                        <div class="col-md-9">
+                            <input type="email" class="form-control" name="email" placeholder="Email Address" required="required">
                         </div>
+                    </div>
 
-
-
-                        <div class="form-group">
-                            <label for="email" class="col-md-3 control-label">Email</label>
-                            <div class="col-md-9">
-                                <input type="email" class="form-control" name="email" placeholder="Email Address" required = "required">
-                            </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-md-3 control-label">First Name</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="firstname" placeholder="First Name" required="required">
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" class="col-md-3 control-label">Last Name</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="lastname" placeholder="Last Name" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mobileno" class="col-md-3 control-label">Mobile No:</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="mobileno" placeholder="Mobile No" required="required">
+                        </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label for="firstname" class="col-md-3 control-label">First Name</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" name="firstname" placeholder="First Name" required = "required">
-                            </div>
+                    <div class="form-group">
+                        <label for="password" class="col-md-3 control-label">Password</label>
+                        <div class="col-md-9">
+                            <input type="password" class="form-control" id="passwd" name="passwd" placeholder="Password" required="required">
                         </div>
-                        <div class="form-group">
-                            <label for="lastname" class="col-md-3 control-label">Last Name</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" name="lastname" placeholder="Last Name" required = "required">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmpassword" class="col-md-3 control-label">Confirm Password</label>
+                        <div class="col-md-9">
+                            <input type="password" class="form-control" id="cpasswd" name="cpasswd" placeholder="Confirm Password" required="required">
                         </div>
-						<div class="form-group">
-                            <label for="mobileno" class="col-md-3 control-label">Mobile No:</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" name="mobileno" placeholder="Mobile No" required = "required">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password" class="col-md-3 control-label">Password</label>
-                            <div class="col-md-9">
-                                <input type="password" class="form-control" id="passwd" name="passwd" placeholder="Password" required = "required" >
-                            </div>
-                        </div>
-						<div class="form-group">
-                            <label for="confirmpassword" class="col-md-3 control-label" style="width:100px;">Confirm Password</label>
-                            <div class="col-md-9">
-                                <input type="password" class="form-control"  id="cpasswd" name="cpasswd" placeholder="Confirm Password" required = "required">
-                            </div>
-                        </div>
+                    </div>
 
 
-                        <div class="form-group">
-                            <!-- Button -->
-                            <div class="col-md-offset-3 col-md-9">
-                                <button id="btn-signup" type="submit" class="btn btn-primary" ><i class="icon-hand-right"></i> &nbsp Sign Up</button>
+                    <div class="form-group">
+                        <!-- Button -->
+                        <div class="col-md-offset-3 col-md-9">
+                            <button id="btn-signup" type="submit" class="btn btn-primary"><i class="icon-hand-right"></i> &nbsp Sign Up</button>
 
-                            </div>
                         </div>
+                    </div>
 
-                        <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
-                                    Already have an account!
-                                <a href="login">
+                    <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+                        Already have an account!
+                        <a href="login">
                                     Login Here
                                 </a>
-                                </div>
-                    </form>
-                 </div>
+                    </div>
+                </form>
             </div>
+        </div>
 
 
 
 
- </div>
-</div>
-</div> <!-- /container -->
-	<!-- script references -->
-		<script src="js/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-	</body>
+    </div>
+    </div>
+    </div>
+    <!-- /container -->
+    <!-- script references -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+
 </html>
